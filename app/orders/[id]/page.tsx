@@ -24,10 +24,10 @@ import {
 const StatusBadge = ({ status }: { status: string }) => {
   const config: Record<string, { label: string; className: string }> = {
     pending: { label: "En attente", className: "bg-yellow-500/15 text-yellow-400 border border-yellow-500/30" },
-    validated: { label: "ValidÃ©e", className: "bg-green-500/15 text-green-400 border border-green-500/30" },
-    locked: { label: "LockÃ©e", className: "bg-blue-500/15 text-blue-400 border border-blue-500/30" },
-    shipped: { label: "ExpÃ©diÃ©e", className: "bg-purple-500/15 text-purple-400 border border-purple-500/30" },
-    delivered: { label: "LivrÃ©e", className: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" },
+    validated: { label: "Validée", className: "bg-green-500/15 text-green-400 border border-green-500/30" },
+    locked: { label: "Lockée", className: "bg-blue-500/15 text-blue-400 border border-blue-500/30" },
+    shipped: { label: "Expédiée", className: "bg-purple-500/15 text-purple-400 border border-purple-500/30" },
+    delivered: { label: "Livrée", className: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" },
   };
   const c = config[status] ?? { label: status, className: "bg-gray-500/15 text-gray-400 border border-gray-500/30" };
   return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${c.className}`}>{c.label}</span>;
@@ -53,27 +53,27 @@ const order = {
     },
   },
   box: {
-    name: "VIVE Box Bien-Ãªtre",
+    name: "VIVE Box Bien-être",
     month: "Mai 2024",
     tier: "Premium",
-    theme: "Ãnergie & VitalitÃ©",
+    theme: "Énergie & Vitalité",
     modules: [
-      { id: "M001", name: "Complexe MagnÃ©sium Marin", brand: "Nutergia", quantity: 1, type: "ComplÃ©ment", value: 18.5 },
-      { id: "M002", name: "Huile essentielle Lavande", brand: "PranarÃ´m", quantity: 1, type: "AromathÃ©rapie", value: 12.9 },
+      { id: "M001", name: "Complexe Magnésium Marin", brand: "Nutergia", quantity: 1, type: "Complément", value: 18.5 },
+      { id: "M002", name: "Huile essentielle Lavande", brand: "Pranarôm", quantity: 1, type: "Aromathérapie", value: 12.9 },
       { id: "M003", name: "Tisane Relaxation", brand: "Yogi Tea", quantity: 2, type: "Infusion", value: 7.8 },
       { id: "M004", name: "Roller Jade", brand: "Natur & Sens", quantity: 1, type: "Accessoire", value: 14.5 },
-      { id: "M005", name: "CrÃ¨me visage Hydra+", brand: "Melvita", quantity: 1, type: "CosmÃ©tique", value: 22.0 },
+      { id: "M005", name: "Crème visage Hydra+", brand: "Melvita", quantity: 1, type: "Cosmétique", value: 22.0 },
     ],
   },
   timeline: [
-    { key: "created", label: "CrÃ©Ã©e", date: "14 mai 2024, 09:32", done: true, icon: Clipboard },
-    { key: "validated", label: "ValidÃ©e", date: "14 mai 2024, 11:15", done: true, icon: Check },
-    { key: "locked", label: "LockÃ©e", date: "16 mai 2024, 08:00", done: true, icon: Lock },
-    { key: "shipped", label: "ExpÃ©diÃ©e", date: null, done: false, icon: Truck },
-    { key: "delivered", label: "LivrÃ©e", date: null, done: false, icon: Home },
+    { key: "created", label: "Créée", date: "14 mai 2024, 09:32", done: true, icon: Clipboard },
+    { key: "validated", label: "Validée", date: "14 mai 2024, 11:15", done: true, icon: Check },
+    { key: "locked", label: "Lockée", date: "16 mai 2024, 08:00", done: true, icon: Lock },
+    { key: "shipped", label: "Expédiée", date: null, done: false, icon: Truck },
+    { key: "delivered", label: "Livrée", date: null, done: false, icon: Home },
   ],
   tracking: "",
-  notes: "Cliente abonnÃ©e depuis novembre 2023. PrÃ©fÃ©rence pour les produits naturels certifiÃ©s bio.",
+  notes: "Cliente abonnée depuis novembre 2023. Préférence pour les produits naturels certifiés bio.",
   carrier: "Colissimo",
 };
 
@@ -95,7 +95,7 @@ export default function OrderDetailPage() {
   const actionButtons = [
     { label: "Valider", icon: Check, show: order.status === "pending", color: "bg-green-600 hover:bg-green-500" },
     { label: "Locker", icon: Lock, show: order.status === "validated", color: "bg-[#3D8BFF] hover:bg-blue-400" },
-    { label: "ExpÃ©dier", icon: Truck, show: order.status === "locked", color: "bg-purple-600 hover:bg-purple-500" },
+    { label: "Expédier", icon: Truck, show: order.status === "locked", color: "bg-purple-600 hover:bg-purple-500" },
     { label: "Swap module", icon: RefreshCw, show: ["pending", "validated"].includes(order.status), color: "bg-[#1C1C28] hover:bg-[#2A2A38] border border-[#2A2A38]" },
   ].filter((b) => b.show);
 
@@ -120,7 +120,7 @@ export default function OrderDetailPage() {
             <StatusBadge status={order.status} />
           </div>
           <p className="text-[#A8A8C0] text-sm">
-            PassÃ©e le{" "}
+            Passée le{" "}
             {new Date(order.date).toLocaleDateString("fr-FR", { day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}
           </p>
         </div>
@@ -164,7 +164,7 @@ export default function OrderDetailPage() {
                 <p className="text-[#F2F2F8]">{order.client.email}</p>
               </div>
               <div>
-                <p className="text-xs text-[#A8A8C0] mb-1">TÃ©lÃ©phone</p>
+                <p className="text-xs text-[#A8A8C0] mb-1">Téléphone</p>
                 <p className="text-[#F2F2F8]">{order.client.phone}</p>
               </div>
               <div>
@@ -197,7 +197,7 @@ export default function OrderDetailPage() {
           <div className="bg-[#1C1C28] border border-[#2A2A38] rounded-xl p-5">
             <div className="flex items-center gap-2 mb-4">
               <Package size={16} className="text-[#3D8BFF]" />
-              <h2 className="text-sm font-semibold text-[#F2F2F8] uppercase tracking-wider">Box sÃ©lectionnÃ©e</h2>
+              <h2 className="text-sm font-semibold text-[#F2F2F8] uppercase tracking-wider">Box sélectionnée</h2>
             </div>
             <div className="grid grid-cols-3 gap-4 mb-5">
               <div>
@@ -209,7 +209,7 @@ export default function OrderDetailPage() {
                 <p className="text-[#F2F2F8] text-sm">{order.box.month}</p>
               </div>
               <div>
-                <p className="text-xs text-[#A8A8C0] mb-1">ThÃ¨me</p>
+                <p className="text-xs text-[#A8A8C0] mb-1">Thème</p>
                 <p className="text-[#F2F2F8] text-sm">{order.box.theme}</p>
               </div>
             </div>
@@ -226,14 +226,14 @@ export default function OrderDetailPage() {
                     </div>
                     <div>
                       <p className="text-[#F2F2F8] text-sm font-medium">{mod.name}</p>
-                      <p className="text-[#A8A8C0] text-xs">{mod.brand} Â· {mod.type}</p>
+                      <p className="text-[#A8A8C0] text-xs">{mod.brand} · {mod.type}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-xs text-[#A8A8C0] bg-[#1C1C28] border border-[#2A2A38] rounded-full px-2 py-0.5">
                       x{mod.quantity}
                     </span>
-                    <span className="text-[#F2F2F8] text-sm font-medium">{mod.value.toFixed(2)} â¬</span>
+                    <span className="text-[#F2F2F8] text-sm font-medium">{mod.value.toFixed(2)} €</span>
                   </div>
                 </div>
               ))}
@@ -241,7 +241,7 @@ export default function OrderDetailPage() {
             <div className="mt-4 pt-4 border-t border-[#2A2A38] flex justify-between items-center">
               <span className="text-[#A8A8C0] text-sm">Valeur totale box</span>
               <span className="text-[#F2F2F8] font-bold text-lg">
-                {order.box.modules.reduce((sum, m) => sum + m.value * m.quantity, 0).toFixed(2)} â¬
+                {order.box.modules.reduce((sum, m) => sum + m.value * m.quantity, 0).toFixed(2)} €
               </span>
             </div>
           </div>
@@ -250,7 +250,7 @@ export default function OrderDetailPage() {
           <div className="bg-[#1C1C28] border border-[#2A2A38] rounded-xl p-5">
             <h2 className="text-sm font-semibold text-[#F2F2F8] uppercase tracking-wider mb-4">Suivi & Notes</h2>
             <div className="mb-4">
-              <label className="text-xs text-[#A8A8C0] block mb-2">NumÃ©ro de tracking ({order.carrier})</label>
+              <label className="text-xs text-[#A8A8C0] block mb-2">Numéro de tracking ({order.carrier})</label>
               {editingTracking ? (
                 <div className="flex gap-2">
                   <input
@@ -269,7 +269,7 @@ export default function OrderDetailPage() {
               ) : (
                 <div className="flex items-center gap-2">
                   <div className="flex-1 bg-[#0A0A0F] border border-[#2A2A38] rounded-lg px-3 py-2 text-sm text-[#A8A8C0]">
-                    {tracking || "Aucun numÃ©ro de tracking"}
+                    {tracking || "Aucun numéro de tracking"}
                   </div>
                   {tracking && (
                     <button
@@ -321,23 +321,23 @@ export default function OrderDetailPage() {
         <div className="flex flex-col gap-6">
           {/* Summary */}
           <div className="bg-[#1C1C28] border border-[#2A2A38] rounded-xl p-5">
-            <h2 className="text-sm font-semibold text-[#F2F2F8] uppercase tracking-wider mb-4">RÃ©capitulatif</h2>
+            <h2 className="text-sm font-semibold text-[#F2F2F8] uppercase tracking-wider mb-4">Récapitulatif</h2>
             <div className="flex flex-col gap-3">
               <div className="flex justify-between text-sm">
                 <span className="text-[#A8A8C0]">Sous-total</span>
-                <span className="text-[#F2F2F8]">{order.amount.toFixed(2)} â¬</span>
+                <span className="text-[#F2F2F8]">{order.amount.toFixed(2)} €</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-[#A8A8C0]">Livraison</span>
                 <span className="text-green-400">Offerte</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-[#A8A8C0]">RÃ©duction</span>
-                <span className="text-[#F2F2F8]">â â¬</span>
+                <span className="text-[#A8A8C0]">Réduction</span>
+                <span className="text-[#F2F2F8]">— €</span>
               </div>
               <div className="pt-3 border-t border-[#2A2A38] flex justify-between">
                 <span className="text-[#F2F2F8] font-semibold">Total</span>
-                <span className="text-[#F2F2F8] font-bold text-lg">{order.amount.toFixed(2)} â¬</span>
+                <span className="text-[#F2F2F8] font-bold text-lg">{order.amount.toFixed(2)} €</span>
               </div>
             </div>
           </div>
