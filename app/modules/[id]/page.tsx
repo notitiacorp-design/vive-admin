@@ -4,10 +4,40 @@ import Link from "next/link";
 import { ArrowLeft, Edit2, Package, Tag, Truck, Weight, BarChart2, Box, AlertTriangle, CheckCircle, RefreshCw } from "lucide-react";
 import StatusBadge from "@/components/StatusBadge";
 
-const moduleData: Record<string, any> = {
+interface ModuleVariant {
+  id: string;
+  name: string;
+  sku: string;
+  stock: number;
+}
+
+interface UsageHistoryEntry {
+  boxId: string;
+  boxName: string;
+  date: string;
+  quantity: number;
+}
+
+interface ModuleDetail {
+  id: string;
+  name: string;
+  sku: string;
+  category: string;
+  status: string;
+  priceCOGS: number;
+  weight: number;
+  supplier: string;
+  stock: number;
+  reorderThreshold: number;
+  description: string;
+  variants: ModuleVariant[];
+  usageHistory: UsageHistoryEntry[];
+}
+
+const moduleData: Record<string, ModuleDetail> = {
   "1": {
     id: "1",
-    name: "Magnésium Marin",
+    name: "MagnÃ©sium Marin",
     sku: "SUPP-MAG-001",
     category: "supplements",
     status: "active",
@@ -16,30 +46,30 @@ const moduleData: Record<string, any> = {
     supplier: "NutriLab France",
     stock: 342,
     reorderThreshold: 50,
-    description: "Magnésium d'origine marine hautement biodisponible, idéal pour la relaxation musculaire et le sommeil.",
+    description: "MagnÃ©sium d'origine marine hautement biodisponible, idÃ©al pour la relaxation musculaire et le sommeil.",
     variants: [
-      { id: "v1", name: "30 gélules", sku: "SUPP-MAG-001-30", stock: 180 },
-      { id: "v2", name: "60 gélules", sku: "SUPP-MAG-001-60", stock: 162 },
+      { id: "v1", name: "30 gÃ©lules", sku: "SUPP-MAG-001-30", stock: 180 },
+      { id: "v2", name: "60 gÃ©lules", sku: "SUPP-MAG-001-60", stock: 162 },
     ],
     usageHistory: [
       { boxId: "BOX-2024-04", boxName: "Box Avril 2024", date: "2024-04-01", quantity: 120 },
       { boxId: "BOX-2024-03", boxName: "Box Mars 2024", date: "2024-03-01", quantity: 115 },
-      { boxId: "BOX-2024-02", boxName: "Box Février 2024", date: "2024-02-01", quantity: 108 },
+      { boxId: "BOX-2024-02", boxName: "Box FÃ©vrier 2024", date: "2024-02-01", quantity: 108 },
       { boxId: "BOX-2024-01", boxName: "Box Janvier 2024", date: "2024-01-01", quantity: 102 },
     ],
   },
   "2": {
     id: "2",
-    name: "Mélatonine 3mg",
+    name: "MÃ©latonine 3mg",
     sku: "SUPP-MEL-002",
     category: "supplements",
     status: "active",
     priceCOGS: 3.1,
     weight: 60,
-    supplier: "BioSanté Pro",
+    supplier: "BioSantÃ© Pro",
     stock: 7,
     reorderThreshold: 30,
-    description: "Mélatonine dosée à 3mg pour favoriser l'endormissement naturel.",
+    description: "MÃ©latonine dosÃ©e Ã  3mg pour favoriser l'endormissement naturel.",
     variants: [],
     usageHistory: [
       { boxId: "BOX-2024-04", boxName: "Box Avril 2024", date: "2024-04-01", quantity: 95 },
@@ -49,7 +79,7 @@ const moduleData: Record<string, any> = {
 };
 
 const categoryLabels: Record<string, string> = {
-  supplements: "Compléments",
+  supplements: "ComplÃ©ments",
   devices: "Appareils",
   accessories: "Accessoires",
 };
@@ -103,7 +133,7 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
         <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
           <AlertTriangle size={18} className="text-red-400 shrink-0" />
           <p className="text-sm text-red-300">
-            Stock critique\ : <span className="font-semibold">{module.stock} unités</span> restantes — en dessous du seuil de réapprovisionnement ({module.reorderThreshold}).
+            Stock critique\ : <span className="font-semibold">{module.stock} unitÃ©s</span> restantes â en dessous du seuil de rÃ©approvisionnement ({module.reorderThreshold}).
           </p>
           <button className="ml-auto flex items-center gap-1.5 px-3 py-1.5 bg-red-500/20 text-red-300 text-xs font-medium rounded-lg hover:bg-red-500/30 transition-colors">
             <RefreshCw size={12} />
@@ -120,12 +150,12 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-base font-semibold text-[#F2F2F8]">Informations produit</h2>
               <button className="flex items-center gap-1.5 text-xs text-[#3D8BFF] hover:text-[#5ba0ff] transition-colors">
-                <Edit2 size={12} /> Éditer
+                <Edit2 size={12} /> Ãditer
               </button>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               <div className="flex flex-col gap-1">
-                <span className="text-xs text-[#A8A8C0] flex items-center gap-1"><Tag size={11} /> Catégorie</span>
+                <span className="text-xs text-[#A8A8C0] flex items-center gap-1"><Tag size={11} /> CatÃ©gorie</span>
                 <span className="text-sm font-medium text-[#F2F2F8]">{categoryLabels[module.category] ?? module.category}</span>
               </div>
               <div className="flex flex-col gap-1">
@@ -134,7 +164,7 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-xs text-[#A8A8C0] flex items-center gap-1"><BarChart2 size={11} /> Prix COGS</span>
-                <span className="text-sm font-medium text-[#F2F2F8]">{module.priceCOGS.toFixed(2)} €</span>
+                <span className="text-sm font-medium text-[#F2F2F8]">{module.priceCOGS.toFixed(2)} â¬</span>
               </div>
               <div className="flex flex-col gap-1">
                 <span className="text-xs text-[#A8A8C0] flex items-center gap-1"><Weight size={11} /> Poids</span>
@@ -163,11 +193,11 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-base font-semibold text-[#F2F2F8]">Variantes</h2>
                 <button className="flex items-center gap-1.5 text-xs text-[#3D8BFF] hover:text-[#5ba0ff] transition-colors">
-                  <Edit2 size={12} /> Gérer
+                  <Edit2 size={12} /> GÃ©rer
                 </button>
               </div>
               <div className="space-y-2">
-                {module.variants.map((variant: any) => (
+                {module.variants.map((variant: ModuleVariant) => (
                   <div
                     key={variant.id}
                     className="flex items-center justify-between p-3 bg-[#0A0A0F] border border-[#2A2A38] rounded-lg"
@@ -195,7 +225,7 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
               <p className="text-sm text-[#A8A8C0] text-center py-8">Aucune inclusion dans une box pour le moment.</p>
             ) : (
               <div className="space-y-2">
-                {module.usageHistory.map((entry: any, idx: number) => (
+                {module.usageHistory.map((entry: UsageHistoryEntry, idx: number) => (
                   <div
                     key={idx}
                     className="flex items-center justify-between p-3 bg-[#0A0A0F] border border-[#2A2A38] rounded-lg hover:border-[#3D8BFF]/40 transition-colors"
@@ -213,7 +243,7 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
                     </div>
                     <div className="text-right">
                       <p className="text-sm font-semibold text-[#F2F2F8]">{entry.quantity}</p>
-                      <p className="text-xs text-[#A8A8C0]">unités utilisées</p>
+                      <p className="text-xs text-[#A8A8C0]">unitÃ©s utilisÃ©es</p>
                     </div>
                   </div>
                 ))}
@@ -237,7 +267,7 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
                 <p className={`text-4xl font-bold ${isLowStock ? "text-red-400" : "text-emerald-400"}`}>
                   {module.stock}
                 </p>
-                <p className="text-xs text-[#A8A8C0] mt-1">unités en stock</p>
+                <p className="text-xs text-[#A8A8C0] mt-1">unitÃ©s en stock</p>
                 {isLowStock ? (
                   <div className="mt-2 flex items-center justify-center gap-1 text-xs text-red-400">
                     <AlertTriangle size={11} /> Stock critique
@@ -272,14 +302,14 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
                   <p className="text-xs text-[#A8A8C0] mt-0.5">Seuil alerte</p>
                 </div>
                 <div className="p-3 bg-[#0A0A0F] rounded-lg border border-[#2A2A38] text-center">
-                  <p className="text-lg font-bold text-[#F2F2F8]">{module.usageHistory.reduce((acc: number, h: any) => acc + h.quantity, 0)}</p>
-                  <p className="text-xs text-[#A8A8C0] mt-0.5">Total distribué</p>
+                  <p className="text-lg font-bold text-[#F2F2F8]">{module.usageHistory.reduce((acc: number, h: UsageHistoryEntry) => acc + h.quantity, 0)}</p>
+                  <p className="text-xs text-[#A8A8C0] mt-0.5">Total distribuÃ©</p>
                 </div>
               </div>
 
               <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#3D8BFF]/10 text-[#3D8BFF] border border-[#3D8BFF]/30 rounded-lg text-sm font-medium hover:bg-[#3D8BFF]/20 transition-colors">
                 <RefreshCw size={14} />
-                Commander un réassort
+                Commander un rÃ©assort
               </button>
             </div>
           </div>
@@ -293,22 +323,22 @@ export default function ModuleDetailPage({ params }: { params: { id: string } })
                 <span className="text-sm font-semibold text-[#F2F2F8]">{module.usageHistory.length}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-[#A8A8C0]">Dernière inclusion</span>
+                <span className="text-sm text-[#A8A8C0]">DerniÃ¨re inclusion</span>
                 <span className="text-sm font-semibold text-[#F2F2F8]">
                   {module.usageHistory[0]
                     ? new Date(module.usageHistory[0].date).toLocaleDateString("fr-FR", { month: "short", year: "numeric" })
-                    : "—"}
+                    : "â"}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-[#A8A8C0]">Coût total distribué</span>
+                <span className="text-sm text-[#A8A8C0]">CoÃ»t total distribuÃ©</span>
                 <span className="text-sm font-semibold text-[#F2F2F8]">
-                  {(module.usageHistory.reduce((acc: number, h: any) => acc + h.quantity, 0) * module.priceCOGS).toFixed(2)} €
+                  {(module.usageHistory.reduce((acc: number, h: UsageHistoryEntry) => acc + h.quantity, 0) * module.priceCOGS).toFixed(2)} â¬
                 </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-[#A8A8C0]">Valeur stock actuel</span>
-                <span className="text-sm font-semibold text-[#F2F2F8]">{(module.stock * module.priceCOGS).toFixed(2)} €</span>
+                <span className="text-sm font-semibold text-[#F2F2F8]">{(module.stock * module.priceCOGS).toFixed(2)} â¬</span>
               </div>
             </div>
           </div>
