@@ -20,6 +20,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.5",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.39.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
@@ -29,7 +30,8 @@
     "react-dom": "^18.2.0",
     "recharts": "^2.10.4",
     "tailwind-merge": "^2.2.1",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.22.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.5",
