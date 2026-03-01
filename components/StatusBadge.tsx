@@ -24,61 +24,61 @@ const STATUS_STYLES: Record<StatusVariant, { bg: string; text: string; dot: stri
     bg: "bg-yellow-400/10",
     text: "text-yellow-400",
     dot: "bg-yellow-400",
-    label: "Pending",
+    label: "En attente",
   },
   validated: {
     bg: "bg-[#3D8BFF]/10",
     text: "text-[#3D8BFF]",
     dot: "bg-[#3D8BFF]",
-    label: "Validated",
+    label: "ValidÃ©",
   },
   locked: {
     bg: "bg-purple-400/10",
     text: "text-purple-400",
     dot: "bg-purple-400",
-    label: "Locked",
+    label: "VerrouillÃ©",
   },
   shipped: {
     bg: "bg-emerald-400/10",
     text: "text-emerald-400",
     dot: "bg-emerald-400",
-    label: "Shipped",
+    label: "ExpÃ©diÃ©",
   },
   delivered: {
     bg: "bg-emerald-400/10",
     text: "text-emerald-400",
     dot: "bg-emerald-400",
-    label: "Delivered",
+    label: "LivrÃ©",
   },
   cancelled: {
     bg: "bg-red-400/10",
     text: "text-red-400",
     dot: "bg-red-400",
-    label: "Cancelled",
+    label: "AnnulÃ©",
   },
   active: {
     bg: "bg-emerald-400/10",
     text: "text-emerald-400",
     dot: "bg-emerald-400",
-    label: "Active",
+    label: "Actif",
   },
   inactive: {
     bg: "bg-[#A8A8C0]/10",
     text: "text-[#A8A8C0]",
     dot: "bg-[#A8A8C0]",
-    label: "Inactive",
+    label: "Inactif",
   },
   approved: {
     bg: "bg-emerald-400/10",
     text: "text-emerald-400",
     dot: "bg-emerald-400",
-    label: "Approved",
+    label: "ApprouvÃ©",
   },
   refused: {
     bg: "bg-red-400/10",
     text: "text-red-400",
     dot: "bg-red-400",
-    label: "Refused",
+    label: "RefusÃ©",
   },
 };
 
@@ -93,7 +93,7 @@ function normalizeStatus(status: string): StatusVariant | null {
   return lower in STATUS_STYLES ? lower : null;
 }
 
-export default function StatusBadge({ status, variant }: StatusBadgeProps) {
+const StatusBadge = React.memo(function StatusBadge({ status, variant }: StatusBadgeProps) {
   const resolvedVariant = variant ?? normalizeStatus(status);
   const styles = resolvedVariant ? STATUS_STYLES[resolvedVariant] : DEFAULT_STYLE;
   const displayLabel = resolvedVariant ? STATUS_STYLES[resolvedVariant].label : status;
@@ -108,4 +108,6 @@ export default function StatusBadge({ status, variant }: StatusBadgeProps) {
       {displayLabel}
     </span>
   );
-}
+});
+
+export default StatusBadge;
