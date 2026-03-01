@@ -11,7 +11,7 @@ interface KPICardProps {
   prefix?: string;
 }
 
-export default function KPICard({ title, value, trend, icon, prefix }: KPICardProps) {
+const KPICard = React.memo(function KPICard({ title, value, trend, icon, prefix }: KPICardProps) {
   const isPositive = trend >= 0;
   const trendColor = isPositive ? "text-emerald-400" : "text-red-400";
   const trendBg = isPositive ? "bg-emerald-400/10" : "bg-red-400/10";
@@ -50,8 +50,10 @@ export default function KPICard({ title, value, trend, icon, prefix }: KPICardPr
           )}
           {formattedTrend}
         </div>
-        <span className="text-xs text-[#A8A8C0]">vs last period</span>
+        <span className="text-xs text-[#A8A8C0]">vs mois dernier</span>
       </div>
     </div>
   );
-}
+});
+
+export default KPICard;
