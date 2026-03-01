@@ -34,7 +34,7 @@ export default function DataTable<T extends Record<string, unknown>>({
   columns,
   data,
   searchKey,
-  searchPlaceholder = "Search...",
+  searchPlaceholder = "Rechercher...",
 }: DataTableProps<T>) {
   const [search, setSearch] = useState("");
   const [sortKey, setSortKey] = useState<string | null>(null);
@@ -143,7 +143,7 @@ export default function DataTable<T extends Record<string, unknown>>({
                   colSpan={columns.length}
                   className="px-4 py-12 text-center text-[#A8A8C0] text-sm"
                 >
-                  No results found.
+                  Aucun rÃ©sultat trouvÃ©.
                 </td>
               </tr>
             ) : (
@@ -172,8 +172,8 @@ export default function DataTable<T extends Record<string, unknown>>({
 
       <div className="flex items-center justify-between text-sm text-[#A8A8C0]">
         <span>
-          Showing {sorted.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1}–
-          {Math.min(page * PAGE_SIZE, sorted.length)} of {sorted.length} results
+          Affichage de {sorted.length === 0 ? 0 : (page - 1) * PAGE_SIZE + 1}â
+          {Math.min(page * PAGE_SIZE, sorted.length)} sur {sorted.length} lignes
         </span>
         <div className="flex items-center gap-2">
           <button
