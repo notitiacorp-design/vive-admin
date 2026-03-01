@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import {
   AreaChart,
   Area,
@@ -17,22 +18,22 @@ import { BarChart2, TrendingUp, RefreshCw, DollarSign } from "lucide-react";
 
 const mrrData = [
   { month: "Jan", essential: 3200, premium: 3100, elite: 1700 },
-  { month: "Fév", essential: 3400, premium: 3300, elite: 1800 },
+  { month: "FÃ©v", essential: 3400, premium: 3300, elite: 1800 },
   { month: "Mar", essential: 3500, premium: 3500, elite: 1950 },
   { month: "Avr", essential: 3700, premium: 3700, elite: 2100 },
   { month: "Mai", essential: 3800, premium: 3900, elite: 2200 },
   { month: "Jun", essential: 3900, premium: 4100, elite: 2350 },
   { month: "Jul", essential: 4000, premium: 4300, elite: 2500 },
-  { month: "Aoû", essential: 4100, premium: 4500, elite: 2650 },
+  { month: "AoÃ»", essential: 4100, premium: 4500, elite: 2650 },
   { month: "Sep", essential: 4200, premium: 4700, elite: 2800 },
   { month: "Oct", essential: 4300, premium: 4900, elite: 2950 },
   { month: "Nov", essential: 4400, premium: 5100, elite: 3100 },
-  { month: "Déc", essential: 4500, premium: 5300, elite: 2700 },
+  { month: "DÃ©c", essential: 4500, premium: 5300, elite: 2700 },
 ];
 
 const cohortData = [
   { cohort: "Jan", m0: 100, m1: 88, m2: 79, m3: 74, m4: 70, m5: 68 },
-  { cohort: "Fév", m0: 100, m1: 90, m2: 81, m3: 76, m4: 72, m5: 69 },
+  { cohort: "FÃ©v", m0: 100, m1: 90, m2: 81, m3: 76, m4: 72, m5: 69 },
   { cohort: "Mar", m0: 100, m1: 87, m2: 78, m3: 73, m4: 69, m5: null },
   { cohort: "Avr", m0: 100, m1: 91, m2: 83, m3: 77, m4: null, m5: null },
   { cohort: "Mai", m0: 100, m1: 89, m2: 80, m3: null, m4: null, m5: null },
@@ -40,15 +41,15 @@ const cohortData = [
 ];
 
 const modulesData = [
-  { name: "Magnésium Marin", value: 89 },
-  { name: "Mélatonine 3mg", value: 76 },
+  { name: "MagnÃ©sium Marin", value: 89 },
+  { name: "MÃ©latonine 3mg", value: 76 },
   { name: "Vitamine D3+K2", value: 71 },
-  { name: "Oméga-3 Premium", value: 68 },
+  { name: "OmÃ©ga-3 Premium", value: 68 },
   { name: "Probiotiques 10M", value: 63 },
   { name: "Ashwagandha KSM", value: 57 },
   { name: "Zinc Bisglycinate", value: 52 },
   { name: "Curcuma Liposomal", value: 47 },
-  { name: "Collagène Marin", value: 43 },
+  { name: "CollagÃ¨ne Marin", value: 43 },
   { name: "Rhodiola Rosea", value: 38 },
 ];
 
@@ -70,25 +71,25 @@ function getRetentionOpacity(value: number | null): string {
   return "opacity-40";
 }
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ name: string; value: number; fill: string }>; label?: string }) => {
   if (active && payload && payload.length) {
-    const total = payload.reduce((sum: number, entry: any) => sum + entry.value, 0);
+    const total = payload.reduce((sum: number, entry: { value: number }) => sum + entry.value, 0);
     return (
       <div className="bg-[#1C1C28] border border-[#2A2A38] rounded-xl p-4 shadow-2xl">
         <p className="text-[#A8A8C0] text-xs font-medium mb-3">{label}</p>
-        {payload.map((entry: any, index: number) => (
+        {payload.map((entry: { name: string; value: number; fill: string }, index: number) => (
           <div key={index} className="flex items-center gap-2 mb-1.5">
             <div
               className="w-2.5 h-2.5 rounded-full flex-shrink-0"
               style={{ backgroundColor: entry.color }}
             />
             <span className="text-[#A8A8C0] text-xs capitalize">{entry.name}:</span>
-            <span className="text-[#F2F2F8] text-xs font-semibold">€{entry.value.toLocaleString()}</span>
+            <span className="text-[#F2F2F8] text-xs font-semibold">â¬{entry.value.toLocaleString()}</span>
           </div>
         ))}
         <div className="border-t border-[#2A2A38] mt-2 pt-2 flex justify-between">
           <span className="text-[#A8A8C0] text-xs">Total MRR</span>
-          <span className="text-[#3D8BFF] text-xs font-bold">€{total.toLocaleString()}</span>
+          <span className="text-[#3D8BFF] text-xs font-bold">â¬{total.toLocaleString()}</span>
         </div>
       </div>
     );
@@ -96,7 +97,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-const ModuleTooltip = ({ active, payload, label }: any) => {
+const ModuleTooltip = ({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-[#1C1C28] border border-[#2A2A38] rounded-xl p-3 shadow-2xl">
@@ -114,7 +115,7 @@ export default function AnalyticsPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-[#F2F2F8] tracking-tight">Analytics</h1>
-        <p className="text-[#A8A8C0] text-sm mt-1">Métriques business</p>
+        <p className="text-[#A8A8C0] text-sm mt-1">MÃ©triques business</p>
       </div>
 
       {/* Section 1: MRR par plan */}
@@ -122,7 +123,7 @@ export default function AnalyticsPage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-[#F2F2F8] font-semibold text-base">MRR par plan</h2>
-            <p className="text-[#A8A8C0] text-xs mt-0.5">Revenus mensuels récurrents sur 12 mois</p>
+            <p className="text-[#A8A8C0] text-xs mt-0.5">Revenus mensuels rÃ©currents sur 12 mois</p>
           </div>
           <div className="flex items-center gap-5">
             <div className="flex items-center gap-2">
@@ -166,7 +167,7 @@ export default function AnalyticsPage() {
               tick={{ fill: "#A8A8C0", fontSize: 12 }}
               axisLine={false}
               tickLine={false}
-              tickFormatter={(v) => `€${(v / 1000).toFixed(0)}k`}
+              tickFormatter={(v) => `â¬${(v / 1000).toFixed(0)}k`}
               width={45}
             />
             <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#2A2A38", strokeWidth: 1 }} />
@@ -201,11 +202,11 @@ export default function AnalyticsPage() {
         </ResponsiveContainer>
       </div>
 
-      {/* Section 2: Rétention Cohortes */}
+      {/* Section 2: RÃ©tention Cohortes */}
       <div className="bg-[#1C1C28] border border-[#2A2A38] rounded-2xl p-6">
         <div className="mb-6">
-          <h2 className="text-[#F2F2F8] font-semibold text-base">Rétention cohortes</h2>
-          <p className="text-[#A8A8C0] text-xs mt-0.5">Taux de rétention par mois depuis l'inscription</p>
+          <h2 className="text-[#F2F2F8] font-semibold text-base">RÃ©tention cohortes</h2>
+          <p className="text-[#A8A8C0] text-xs mt-0.5">Taux de rÃ©tention par mois depuis l'inscription</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -233,7 +234,7 @@ export default function AnalyticsPage() {
                         }`}
                         style={{ minWidth: "56px" }}
                       >
-                        {val !== null ? `${val}%` : "—"}
+                        {val !== null ? `${val}%` : "â"}
                       </div>
                     </td>
                   ))}
@@ -255,17 +256,17 @@ export default function AnalyticsPage() {
               <div key={i} className={`w-6 h-4 rounded ${cls}`} />
             ))}
           </div>
-          <span className="text-[#A8A8C0] text-xs">Élevé</span>
+          <span className="text-[#A8A8C0] text-xs">ÃlevÃ©</span>
         </div>
       </div>
 
       {/* Section 3 + Section 4 side by side on large screens */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        {/* Section 3: Top modules demandés */}
+        {/* Section 3: Top modules demandÃ©s */}
         <div className="xl:col-span-2 bg-[#1C1C28] border border-[#2A2A38] rounded-2xl p-6">
           <div className="mb-6">
-            <h2 className="text-[#F2F2F8] font-semibold text-base">Top modules demandés</h2>
-            <p className="text-[#A8A8C0] text-xs mt-0.5">Pourcentage d'abonnés ayant demandé le module</p>
+            <h2 className="text-[#F2F2F8] font-semibold text-base">Top modules demandÃ©s</h2>
+            <p className="text-[#A8A8C0] text-xs mt-0.5">Pourcentage d'abonnÃ©s ayant demandÃ© le module</p>
           </div>
           <ResponsiveContainer width="100%" height={340}>
             <BarChart
@@ -303,10 +304,10 @@ export default function AnalyticsPage() {
           </ResponsiveContainer>
         </div>
 
-        {/* Section 4: Métriques clés */}
+        {/* Section 4: MÃ©triques clÃ©s */}
         <div className="xl:col-span-1 flex flex-col gap-4">
           <div className="mb-1">
-            <h2 className="text-[#F2F2F8] font-semibold text-base">Métriques clés</h2>
+            <h2 className="text-[#F2F2F8] font-semibold text-base">MÃ©triques clÃ©s</h2>
             <p className="text-[#A8A8C0] text-xs mt-0.5">Indicateurs de performance</p>
           </div>
           <KPICard
@@ -332,8 +333,8 @@ export default function AnalyticsPage() {
           />
           <KPICard
             title="LTV moyen"
-            value="€186"
-            delta="+€12"
+            value="â¬186"
+            delta="+â¬12"
             deltaPositive={true}
             icon={<DollarSign size={18} className="text-[#3D8BFF]" />}
           />
