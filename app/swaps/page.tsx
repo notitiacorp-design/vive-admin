@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import { useState } from "react";
 import { CheckCircle, XCircle, Clock, RefreshCw, ChevronDown, ChevronUp, X, AlertCircle, TrendingUp, Package, Users, BarChart2 } from "lucide-react";
 
@@ -18,24 +20,24 @@ interface SwapRequest {
 }
 
 const mockSwaps: SwapRequest[] = [
-  { id: "SW-001", client: { name: "Marie Dupont", email: "marie.dupont@email.fr" }, originalModule: "Marketing Digital", requestedModule: "SEO Avancé", dateRequest: "2024-01-15", status: "pending", reason: "Je souhaite me spécialiser davantage dans le référencement naturel plutôt que le marketing global." },
-  { id: "SW-002", client: { name: "Thomas Martin", email: "thomas.martin@email.fr" }, originalModule: "Développement Web", requestedModule: "React & Next.js", dateRequest: "2024-01-14", status: "pending", reason: "Mon projet professionnel nécessite des compétences spécifiques en React." },
-  { id: "SW-003", client: { name: "Sophie Bernard", email: "sophie.bernard@email.fr" }, originalModule: "Data Analytics", requestedModule: "Machine Learning", dateRequest: "2024-01-13", status: "pending", reason: "Je veux évoluer vers l'IA et le machine learning pour mon poste actuel." },
-  { id: "SW-004", client: { name: "Lucas Petit", email: "lucas.petit@email.fr" }, originalModule: "UX Design", requestedModule: "UI Design Avancé", dateRequest: "2024-01-12", status: "pending", reason: "Mon entreprise a besoin de compétences UI plutôt qu'UX en ce moment." },
-  { id: "SW-005", client: { name: "Emma Leroy", email: "emma.leroy@email.fr" }, originalModule: "Gestion de Projet", requestedModule: "Agilité & Scrum", dateRequest: "2024-01-11", status: "pending", reason: "Ma société adopte la méthodologie agile, je dois m'adapter rapidement." },
-  { id: "SW-006", client: { name: "Hugo Moreau", email: "hugo.moreau@email.fr" }, originalModule: "Cybersécurité", requestedModule: "Ethical Hacking", dateRequest: "2024-01-10", status: "approved", reason: "Je souhaite me spécialiser en tests d'intrusion.", adminNote: "Demande approuvée. Le module Ethical Hacking correspond parfaitement au profil de l'apprenant.", adminDate: "2024-01-11" },
-  { id: "SW-007", client: { name: "Camille Roux", email: "camille.roux@email.fr" }, originalModule: "E-commerce", requestedModule: "Dropshipping Avancé", dateRequest: "2024-01-09", status: "approved", reason: "Je lance une activité de dropshipping et ai besoin de compétences spécifiques.", adminNote: "Approuvé suite à la validation du projet entrepreneurial de l'apprenant.", adminDate: "2024-01-10" },
-  { id: "SW-008", client: { name: "Nathan Dubois", email: "nathan.dubois@email.fr" }, originalModule: "Comptabilité", requestedModule: "Finance d'Entreprise", dateRequest: "2024-01-08", status: "approved", reason: "Promotion professionnelle nécessitant des compétences en finance.", adminNote: "Swap validé. La progression vers la finance est cohérente avec le parcours.", adminDate: "2024-01-09" },
-  { id: "SW-009", client: { name: "Léa Simon", email: "lea.simon@email.fr" }, originalModule: "Photographie", requestedModule: "Montage Vidéo", dateRequest: "2024-01-07", status: "refused", reason: "Je souhaite me réorienter vers la vidéo.", adminNote: "Refusé. Le module demandé n'est pas disponible ce trimestre. Merci de reprogrammer en Q2.", adminDate: "2024-01-08" },
-  { id: "SW-010", client: { name: "Maxime Girard", email: "maxime.girard@email.fr" }, originalModule: "Réseaux Sociaux", requestedModule: "Growth Hacking", dateRequest: "2024-01-06", status: "refused", reason: "Je veux aller plus loin que la simple gestion des RS.", adminNote: "Refusé. Le niveau prérequis pour le Growth Hacking n'est pas atteint. Contactez votre conseiller.", adminDate: "2024-01-07" },
-  { id: "SW-011", client: { name: "Inès Fontaine", email: "ines.fontaine@email.fr" }, originalModule: "Communication", requestedModule: "Prise de Parole", dateRequest: "2024-01-05", status: "approved", reason: "Je dois animer des réunions et conférences dans mon nouveau poste.", adminNote: "Validé. Excellent choix pour accompagner l'évolution professionnelle.", adminDate: "2024-01-06" },
+  { id: "SW-001", client: { name: "Marie Dupont", email: "marie.dupont@email.fr" }, originalModule: "Marketing Digital", requestedModule: "SEO AvancÃ©", dateRequest: "2024-01-15", status: "pending", reason: "Je souhaite me spÃ©cialiser davantage dans le rÃ©fÃ©rencement naturel plutÃ´t que le marketing global." },
+  { id: "SW-002", client: { name: "Thomas Martin", email: "thomas.martin@email.fr" }, originalModule: "DÃ©veloppement Web", requestedModule: "React & Next.js", dateRequest: "2024-01-14", status: "pending", reason: "Mon projet professionnel nÃ©cessite des compÃ©tences spÃ©cifiques en React." },
+  { id: "SW-003", client: { name: "Sophie Bernard", email: "sophie.bernard@email.fr" }, originalModule: "Data Analytics", requestedModule: "Machine Learning", dateRequest: "2024-01-13", status: "pending", reason: "Je veux Ã©voluer vers l'IA et le machine learning pour mon poste actuel." },
+  { id: "SW-004", client: { name: "Lucas Petit", email: "lucas.petit@email.fr" }, originalModule: "UX Design", requestedModule: "UI Design AvancÃ©", dateRequest: "2024-01-12", status: "pending", reason: "Mon entreprise a besoin de compÃ©tences UI plutÃ´t qu'UX en ce moment." },
+  { id: "SW-005", client: { name: "Emma Leroy", email: "emma.leroy@email.fr" }, originalModule: "Gestion de Projet", requestedModule: "AgilitÃ© & Scrum", dateRequest: "2024-01-11", status: "pending", reason: "Ma sociÃ©tÃ© adopte la mÃ©thodologie agile, je dois m'adapter rapidement." },
+  { id: "SW-006", client: { name: "Hugo Moreau", email: "hugo.moreau@email.fr" }, originalModule: "CybersÃ©curitÃ©", requestedModule: "Ethical Hacking", dateRequest: "2024-01-10", status: "approved", reason: "Je souhaite me spÃ©cialiser en tests d'intrusion.", adminNote: "Demande approuvÃ©e. Le module Ethical Hacking correspond parfaitement au profil de l'apprenant.", adminDate: "2024-01-11" },
+  { id: "SW-007", client: { name: "Camille Roux", email: "camille.roux@email.fr" }, originalModule: "E-commerce", requestedModule: "Dropshipping AvancÃ©", dateRequest: "2024-01-09", status: "approved", reason: "Je lance une activitÃ© de dropshipping et ai besoin de compÃ©tences spÃ©cifiques.", adminNote: "ApprouvÃ© suite Ã  la validation du projet entrepreneurial de l'apprenant.", adminDate: "2024-01-10" },
+  { id: "SW-008", client: { name: "Nathan Dubois", email: "nathan.dubois@email.fr" }, originalModule: "ComptabilitÃ©", requestedModule: "Finance d'Entreprise", dateRequest: "2024-01-08", status: "approved", reason: "Promotion professionnelle nÃ©cessitant des compÃ©tences en finance.", adminNote: "Swap validÃ©. La progression vers la finance est cohÃ©rente avec le parcours.", adminDate: "2024-01-09" },
+  { id: "SW-009", client: { name: "LÃ©a Simon", email: "lea.simon@email.fr" }, originalModule: "Photographie", requestedModule: "Montage VidÃ©o", dateRequest: "2024-01-07", status: "refused", reason: "Je souhaite me rÃ©orienter vers la vidÃ©o.", adminNote: "RefusÃ©. Le module demandÃ© n'est pas disponible ce trimestre. Merci de reprogrammer en Q2.", adminDate: "2024-01-08" },
+  { id: "SW-010", client: { name: "Maxime Girard", email: "maxime.girard@email.fr" }, originalModule: "RÃ©seaux Sociaux", requestedModule: "Growth Hacking", dateRequest: "2024-01-06", status: "refused", reason: "Je veux aller plus loin que la simple gestion des RS.", adminNote: "RefusÃ©. Le niveau prÃ©requis pour le Growth Hacking n'est pas atteint. Contactez votre conseiller.", adminDate: "2024-01-07" },
+  { id: "SW-011", client: { name: "InÃ¨s Fontaine", email: "ines.fontaine@email.fr" }, originalModule: "Communication", requestedModule: "Prise de Parole", dateRequest: "2024-01-05", status: "approved", reason: "Je dois animer des rÃ©unions et confÃ©rences dans mon nouveau poste.", adminNote: "ValidÃ©. Excellent choix pour accompagner l'Ã©volution professionnelle.", adminDate: "2024-01-06" },
 ];
 
 const StatusBadge = ({ status }: { status: SwapStatus }) => {
   const config = {
     pending: { label: "En attente", icon: Clock, bg: "bg-[#2A1F00]", text: "text-[#FFC107]", border: "border-[#FFC107]/30" },
-    approved: { label: "Approuvé", icon: CheckCircle, bg: "bg-[#001F0F]", text: "text-[#10B981]", border: "border-[#10B981]/30" },
-    refused: { label: "Refusé", icon: XCircle, bg: "bg-[#1F0005]", text: "text-[#EF4444]", border: "border-[#EF4444]/30" },
+    approved: { label: "ApprouvÃ©", icon: CheckCircle, bg: "bg-[#001F0F]", text: "text-[#10B981]", border: "border-[#10B981]/30" },
+    refused: { label: "RefusÃ©", icon: XCircle, bg: "bg-[#1F0005]", text: "text-[#EF4444]", border: "border-[#EF4444]/30" },
   }[status];
   const Icon = config.icon;
   return (
@@ -46,7 +48,7 @@ const StatusBadge = ({ status }: { status: SwapStatus }) => {
   );
 };
 
-const KPICard = ({ icon: Icon, label, value, sub, color }: { icon: any; label: string; value: string | number; sub?: string; color: string }) => (
+const KPICard = ({ icon: Icon, label, value, sub, color }: { icon: React.ElementType; label: string; value: string | number; sub?: string; color: string }) => (
   <div className="bg-[#1C1C28] border border-[#2A2A38] rounded-xl p-5 flex items-start gap-4">
     <div className={`p-2.5 rounded-lg ${color}`}>
       <Icon size={20} className="text-white" />
@@ -72,7 +74,7 @@ const NoteModal = ({ swap, type, onClose, onConfirm }: { swap: SwapRequest; type
             </div>
             <div>
               <h3 className="text-[#F2F2F8] font-semibold">{isApprove ? "Approuver le swap" : "Refuser le swap"}</h3>
-              <p className="text-[#A8A8C0] text-xs">{swap.id} — {swap.client.name}</p>
+              <p className="text-[#A8A8C0] text-xs">{swap.id} â {swap.client.name}</p>
             </div>
           </div>
           <button onClick={onClose} className="text-[#A8A8C0] hover:text-[#F2F2F8] transition-colors">
@@ -86,7 +88,7 @@ const NoteModal = ({ swap, type, onClose, onConfirm }: { swap: SwapRequest; type
               <RefreshCw size={12} className="text-[#3D8BFF]" />
               <span className="font-medium text-[#F2F2F8]">{swap.requestedModule}</span>
             </div>
-            <p className="text-[#A8A8C0] text-xs italic">« {swap.reason} »</p>
+            <p className="text-[#A8A8C0] text-xs italic">Â« {swap.reason} Â»</p>
           </div>
           <div>
             <label className="block text-[#A8A8C0] text-xs font-medium mb-2">Note administrative <span className="text-[#A8A8C0]/50">(optionnel)</span></label>
@@ -94,7 +96,7 @@ const NoteModal = ({ swap, type, onClose, onConfirm }: { swap: SwapRequest; type
               value={note}
               onChange={e => setNote(e.target.value)}
               rows={3}
-              placeholder={isApprove ? "Ex: Swap validé car cohérent avec le parcours..." : "Ex: Refusé car le module prérequis n'est pas validé..."}
+              placeholder={isApprove ? "Ex: Swap validÃ© car cohÃ©rent avec le parcours..." : "Ex: RefusÃ© car le module prÃ©requis n'est pas validÃ©..."}
               className="w-full bg-[#0A0A0F] border border-[#2A2A38] rounded-xl px-4 py-3 text-[#F2F2F8] text-sm placeholder-[#A8A8C0]/50 focus:outline-none focus:border-[#3D8BFF] resize-none transition-colors"
             />
           </div>
@@ -123,8 +125,8 @@ export default function SwapsPage() {
 
   const tabs: { key: SwapStatus; label: string; count: number }[] = [
     { key: "pending", label: "En attente", count: swaps.filter(s => s.status === "pending").length },
-    { key: "approved", label: "Approuvés", count: swaps.filter(s => s.status === "approved").length },
-    { key: "refused", label: "Refusés", count: swaps.filter(s => s.status === "refused").length },
+    { key: "approved", label: "ApprouvÃ©s", count: swaps.filter(s => s.status === "approved").length },
+    { key: "refused", label: "RefusÃ©s", count: swaps.filter(s => s.status === "refused").length },
   ];
 
   const filtered = swaps.filter(s => s.status === activeTab);
@@ -132,7 +134,7 @@ export default function SwapsPage() {
   const handleAction = (note: string) => {
     if (!modal) return;
     const newStatus: SwapStatus = modal.type === "approve" ? "approved" : "refused";
-    setSwaps(prev => prev.map(s => s.id === modal.swap.id ? { ...s, status: newStatus, adminNote: note || (newStatus === "approved" ? "Swap approuvé par l'administrateur." : "Swap refusé par l'administrateur."), adminDate: new Date().toISOString().split("T")[0] } : s));
+    setSwaps(prev => prev.map(s => s.id === modal.swap.id ? { ...s, status: newStatus, adminNote: note || (newStatus === "approved" ? "Swap approuvÃ© par l'administrateur." : "Swap refusÃ© par l'administrateur."), adminDate: new Date().toISOString().split("T")[0] } : s));
     setModal(null);
   };
 
@@ -149,9 +151,9 @@ export default function SwapsPage() {
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <KPICard icon={BarChart2} label="Total swaps ce mois" value={24} sub="+3 vs mois dernier" color="bg-[#3D8BFF]/20" />
-        <KPICard icon={Clock} label="En attente" value={swaps.filter(s => s.status === "pending").length} sub="Demandes à traiter" color="bg-[#FFC107]/20" />
+        <KPICard icon={Clock} label="En attente" value={swaps.filter(s => s.status === "pending").length} sub="Demandes Ã  traiter" color="bg-[#FFC107]/20" />
         <KPICard icon={TrendingUp} label="Taux swap" value="4.2%" sub="Des formations actives" color="bg-[#10B981]/20" />
-        <KPICard icon={Package} label="Tokens distribués" value={156} sub="Ce trimestre" color="bg-[#8B5CF6]/20" />
+        <KPICard icon={Package} label="Tokens distribuÃ©s" value={156} sub="Ce trimestre" color="bg-[#8B5CF6]/20" />
       </div>
 
       {/* Tabs + Table */}
@@ -185,7 +187,7 @@ export default function SwapsPage() {
           <table className="w-full">
             <thead>
               <tr className="border-b border-[#2A2A38]">
-                {["ID", "Client", "Module original", "Module demandé", "Date demande", "Statut", "Actions"].map(col => (
+                {["ID", "Client", "Module original", "Module demandÃ©", "Date demande", "Statut", "Actions"].map(col => (
                   <th key={col} className="text-left text-[#A8A8C0] text-xs font-semibold uppercase tracking-wide px-6 py-3">{col}</th>
                 ))}
               </tr>
@@ -195,7 +197,7 @@ export default function SwapsPage() {
                 <tr>
                   <td colSpan={7} className="text-center py-16 text-[#A8A8C0]">
                     <AlertCircle size={32} className="mx-auto mb-3 opacity-30" />
-                    <p className="text-sm">Aucun swap dans cette catégorie</p>
+                    <p className="text-sm">Aucun swap dans cette catÃ©gorie</p>
                   </td>
                 </tr>
               )}
@@ -256,7 +258,7 @@ export default function SwapsPage() {
                           </>
                         )}
                         {swap.status !== "pending" && (
-                          <span className="text-[#A8A8C0] text-xs">Traité</span>
+                          <span className="text-[#A8A8C0] text-xs">TraitÃ©</span>
                         )}
                         <button onClick={() => toggleRow(swap.id)} className="p-1.5 rounded-lg hover:bg-[#2A2A38] text-[#A8A8C0] transition-colors">
                           {expandedRow === swap.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -270,7 +272,7 @@ export default function SwapsPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="bg-[#1C1C28] border border-[#2A2A38] rounded-xl p-4 space-y-2">
                             <p className="text-[#A8A8C0] text-xs font-semibold uppercase tracking-wide">Raison de la demande</p>
-                            <p className="text-[#F2F2F8] text-sm leading-relaxed italic">« {swap.reason} »</p>
+                            <p className="text-[#F2F2F8] text-sm leading-relaxed italic">Â« {swap.reason} Â»</p>
                             <div className="flex items-center gap-4 pt-1">
                               <div className="text-xs text-[#A8A8C0]">
                                 <span className="font-medium text-[#F2F2F8]">De: </span>{swap.originalModule}
@@ -292,7 +294,7 @@ export default function SwapsPage() {
                               <div className="flex items-center justify-between">
                                 <p className={`text-xs font-semibold uppercase tracking-wide ${
                                   swap.status === "approved" ? "text-[#10B981]" : swap.status === "refused" ? "text-[#EF4444]" : "text-[#A8A8C0]"
-                                }`}>Réponse administrative</p>
+                                }`}>RÃ©ponse administrative</p>
                                 {swap.adminDate && (
                                   <span className="text-[#A8A8C0] text-xs">{new Date(swap.adminDate).toLocaleDateString("fr-FR")}</span>
                                 )}
@@ -303,13 +305,13 @@ export default function SwapsPage() {
                           {swap.status === "pending" && !swap.adminNote && (
                             <div className="bg-[#2A1F00]/50 border border-[#FFC107]/20 rounded-xl p-4 space-y-2">
                               <p className="text-[#FFC107] text-xs font-semibold uppercase tracking-wide">En attente de traitement</p>
-                              <p className="text-[#A8A8C0] text-sm">Cette demande n'a pas encore été traitée par un administrateur.</p>
+                              <p className="text-[#A8A8C0] text-sm">Cette demande n'a pas encore Ã©tÃ© traitÃ©e par un administrateur.</p>
                             </div>
                           )}
                         </div>
                         <div className="flex items-center gap-6 mt-4 pt-4 border-t border-[#2A2A38]">
                           <div className="text-xs text-[#A8A8C0]">
-                            <span className="text-[#F2F2F8] font-medium">Client: </span>{swap.client.name} — {swap.client.email}
+                            <span className="text-[#F2F2F8] font-medium">Client: </span>{swap.client.name} â {swap.client.email}
                           </div>
                           <div className="text-xs text-[#A8A8C0]">
                             <span className="text-[#F2F2F8] font-medium">Demande: </span>{new Date(swap.dateRequest).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}
@@ -329,8 +331,8 @@ export default function SwapsPage() {
 
         {/* Footer */}
         <div className="px-6 py-4 border-t border-[#2A2A38] flex items-center justify-between">
-          <p className="text-[#A8A8C0] text-xs">{filtered.length} résultat{filtered.length > 1 ? "s" : ""}</p>
-          <p className="text-[#A8A8C0] text-xs">Dernière mise à jour: {new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</p>
+          <p className="text-[#A8A8C0] text-xs">{filtered.length} rÃ©sultat{filtered.length > 1 ? "s" : ""}</p>
+          <p className="text-[#A8A8C0] text-xs">DerniÃ¨re mise Ã  jour: {new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" })}</p>
         </div>
       </div>
 
