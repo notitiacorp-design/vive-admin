@@ -46,7 +46,7 @@ let _adminClient: AdminSupabaseClient | null = null;
 /**
  * Returns a Supabase client that uses the **service role** key.
  *
- * ⚠️  SECURITY NOTES:
+ * â ï¸  SECURITY NOTES:
  *  - This client bypasses Row Level Security (RLS).
  *  - NEVER expose this client or its key to the browser / client bundle.
  *  - Only import this file from Server Components, API Route Handlers,
@@ -92,7 +92,7 @@ export function getSupabaseAdminClient(): AdminSupabaseClient {
  *
  * ```ts
  * import { supabaseAdmin } from '@/lib/supabase-admin';
- * const { data } = await supabaseAdmin.from('users').select('*');
+ * const { data, error } = await supabaseAdmin.from('users').select('id, email, name, role, created_at');
  * ```
  *
  * Note: The client is lazily initialised on first access via the getter,
@@ -161,7 +161,7 @@ export async function listAdminUsers(
 
 /**
  * Promotes a user to the 'admin' role by updating their app_metadata.
- * app_metadata can only be written by the service role – not by the user.
+ * app_metadata can only be written by the service role â not by the user.
  */
 export async function setUserAdminRole(
   userId: string,
