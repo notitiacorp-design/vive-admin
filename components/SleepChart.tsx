@@ -41,7 +41,7 @@ function CustomTooltip({ active, payload, label }: TooltipProps<ValueType, NameT
       {duration !== undefined && (
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-violet-400 flex-shrink-0" />
-          <span className="text-xs text-[#A8A8C0]">Duration</span>
+          <span className="text-xs text-[#A8A8C0]">DurÃ©e</span>
           <span className="ml-auto text-xs font-bold text-[#F2F2F8]">{duration}h</span>
         </div>
       )}
@@ -49,13 +49,13 @@ function CustomTooltip({ active, payload, label }: TooltipProps<ValueType, NameT
   );
 }
 
-export default function SleepChart({ data }: SleepChartProps) {
+function SleepChartInner({ data }: SleepChartProps) {
   return (
     <div className="w-full rounded-2xl border border-[#2A2A38] bg-[#1C1C28] p-5">
       <div className="mb-5 flex items-center justify-between">
         <div>
           <h3 className="text-sm font-semibold text-[#F2F2F8]">Sleep Quality</h3>
-          <p className="text-xs text-[#A8A8C0] mt-0.5">Score &amp; duration over time</p>
+          <p className="text-xs text-[#A8A8C0] mt-0.5">Score &amp; durÃ©e dans le temps</p>
         </div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-1.5">
@@ -125,3 +125,5 @@ export default function SleepChart({ data }: SleepChartProps) {
     </div>
   );
 }
+
+export default React.memo(SleepChartInner);
